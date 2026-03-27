@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Оплата</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card" aria-label="Оплата онлайн">
+        <div class="card__inner">
+          <h1 class="title">Оплатить онлайн</h1>
+          <p class="subtitle">Официальная платёжная страница продавца</p>
+
+          <div class="section">
+            <p class="subtitle" style="margin: 0 0 10px">Согласуйте заказ с менеджером</p>
+            <ol class="steps">
+              <li>Введите номер заказа</li>
+              <li>Введите номер мобильного телефона</li>
+              <li>Введите E-mail</li>
+              <li>Проверьте наименование товара и сумму оплаты</li>
+              <li>Нажмите кнопку «Оплатить»</li>
+              <li>Выберите метод оплаты</li>
+            </ol>
+
+            <div class="kv" aria-label="Детали заказа">
+              <div class="kv__k">Номер заказа</div>
+              <div class="kv__v" id="orderId">—</div>
+              <div class="kv__k">Наименование</div>
+              <div class="kv__v" id="productName">—</div>
+              <div class="kv__k">Сумма оплаты</div>
+              <div class="kv__v" id="productPrice">—</div>
+            </div>
+
+            <form id="checkoutForm" class="form">
+              <div class="field">
+                <label for="phone">Номер мобильного телефона</label>
+                <div class="phoneRow">
+                  <select id="country" class="country" aria-label="Страна">
+                    <option value="+7" selected>🇷🇺 Россия (+7)</option>
+                    <option value="+7">🇰🇿 Казахстан (+7)</option>
+                    <option value="+375">🇧🇾 Беларусь (+375)</option>
+                    <option value="+380">🇺🇦 Украина (+380)</option>
+                    <option value="+998">🇺🇿 Узбекистан (+998)</option>
+                    <option value="+996">🇰🇬 Кыргызстан (+996)</option>
+                    <option value="+994">🇦🇿 Азербайджан (+994)</option>
+                    <option value="+374">🇦🇲 Армения (+374)</option>
+                    <option value="+995">🇬🇪 Грузия (+995)</option>
+                    <option value="+90">🇹🇷 Турция (+90)</option>
+                    <option value="+971">🇦🇪 ОАЭ (+971)</option>
+                    <option value="+49">🇩🇪 Германия (+49)</option>
+                    <option value="+44">🇬🇧 Великобритания (+44)</option>
+                    <option value="+1">🇺🇸/🇨🇦 США/Канада (+1)</option>
+                  </select>
+                  <input name="phone" id="phone" class="phoneInput" type="tel" autocomplete="tel" required />
+                </div>
+              </div>
+              <div class="field">
+                <label for="email">E-mail (сюда придёт ссылка на доступ)</label>
+                <input name="email" id="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="actions">
+                <button id="payBtn" class="btn" type="submit">Оплатить</button>
+              </div>
+              <div id="status" class="status" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <div class="section">
+            <p class="note">
+              Для приёма платежей мы используем надёжное и безопасное платёжное решение. Процедура оплаты проста, деньги
+              зачисляются мгновенно. Ваши данные передаются по защищённым каналам связи.
+            </p>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div><a class="link" id="offerLink" href="/offer.html">Ознакомиться с офертой продавца</a></div>
+          <div>По любым вопросам обращайтесь: <strong>+7 990 051-29-77</strong></div>
+          <div><a class="link" href="https://t.me/niksssssk" target="_blank" rel="noopener noreferrer">Telegram</a></div>
+          <div><a class="link" href="mailto:nikazolosuk@gmail.com">nikazolosuk@gmail.com</a></div>
+        </footer>
+      </section>
+    </main>
+
+    <div class="modalOverlay" id="offerModalOverlay" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-label="Публичная оферта">
+        <div class="modalHeader">
+          <h2 class="modalTitle">Публичная оферта</h2>
+          <button class="modalClose" type="button" id="offerModalClose">Закрыть</button>
+        </div>
+        <div class="modalBody">
+          <div class="doc">
+            <p><b>на предоставление цифрового продукта</b></p>
+
+            <h2>1. Общие положения</h2>
+            <p>
+              1.1. Настоящий документ является официальным предложением (публичной офертой) физического лица (далее —
+              Продавец) заключить договор на указанных ниже условиях.
+            </p>
+            <p>1.2. Оплата продукта Покупателем означает полное и безоговорочное принятие условий настоящей оферты.</p>
+
+            <h2>2. Описание продукта</h2>
+            <p>2.1. Продавец предоставляет доступ к цифровому продукту — информационному гайду «Формула Блога».</p>
+            <p>2.2. Продукт включает текстовые и иные материалы, размещённые в закрытом Telegram-канале.</p>
+            <p>2.3. Доступ предоставляется в электронном формате.</p>
+
+            <h2>3. Порядок оплаты</h2>
+            <p>3.1. Оплата осуществляется через платёжный сервис Lava.ru.</p>
+            <p>3.2. Стоимость продукта указывается на странице оплаты.</p>
+            <p>3.3. Моментом оплаты считается поступление денежных средств Продавцу.</p>
+
+            <h2>4. Порядок предоставления доступа</h2>
+            <p>4.1. Доступ к продукту предоставляется после подтверждения оплаты.</p>
+            <p>4.2. Ссылка на доступ направляется Покупателю на указанный email.</p>
+            <p>4.3. В случае некорректного указания данных Продавец не несёт ответственности за неполучение доступа.</p>
+
+            <h2>5. Права и обязанности сторон</h2>
+            <p>Продавец обязуется:</p>
+            <p>— предоставить доступ к продукту после оплаты</p>
+            <p>Покупатель обязуется:</p>
+            <p>— не передавать доступ третьим лицам</p>
+            <p>— не распространять материалы</p>
+
+            <h2>6. Интеллектуальная собственность</h2>
+            <p>6.1. Все материалы являются собственностью Продавца.</p>
+            <p>6.2. Любое копирование, распространение или передача третьим лицам запрещены.</p>
+
+            <h2>7. Возврат средств</h2>
+            <p>7.1. Услуга считается оказанной с момента предоставления доступа.</p>
+            <p>7.2. Возврат средств после предоставления доступа не осуществляется.</p>
+
+            <h2>8. Ответственность</h2>
+            <p>8.1. Продукт носит информационный характер.</p>
+            <p>8.2. Продавец не гарантирует получение конкретных результатов.</p>
+
+            <h2>9. Заключительные положения</h2>
+            <p>9.1. Продавец вправе изменять условия оферты без предварительного уведомления.</p>
+            <p>9.2. Актуальная версия размещается на странице продукта.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const orderIdEl = document.getElementById('orderId')
+      const productNameEl = document.getElementById('productName')
+      const productPriceEl = document.getElementById('productPrice')
+      const statusEl = document.getElementById('status')
+      const form = document.getElementById('checkoutForm')
+      const payBtn = document.getElementById('payBtn')
+      const countryEl = document.getElementById('country')
+      const phoneEl = document.getElementById('phone')
+      const offerLink = document.getElementById('offerLink')
+      const offerModalOverlay = document.getElementById('offerModalOverlay')
+      const offerModalClose = document.getElementById('offerModalClose')
+
+      let orderId = null
+      let lastActiveEl = null
+
+      function setStatus(text, kind) {
+        statusEl.textContent = text || ''
+        if (!text) {
+          statusEl.style.color = ''
+          return
+        }
+        if (kind === 'info') {
+          statusEl.style.color = 'var(--muted)'
+          return
+        }
+        statusEl.style.color = 'var(--danger)'
+      }
+
+      function digitsOnly(value) {
+        return String(value || '').replaceAll(/\D/g, '')
+      }
+
+      function translateError(code) {
+        const c = String(code || '').trim()
+        if (/[А-Яа-яЁё]/.test(c)) return c
+        if (!c) return 'Произошла ошибка. Попробуйте ещё раз.'
+        if (/^MISSING_ENV_/.test(c)) return 'Оплата временно недоступна. Обратитесь в поддержку.'
+        if (c === 'INVALID_EMAIL') return 'Заполните поле e-mail корректно.'
+        if (c === 'INVALID_PHONE') return 'Заполните поле номера телефона корректно.'
+        if (c === 'INVALID_ORDER_ID') return 'Ошибка заказа. Обновите страницу и попробуйте ещё раз.'
+        if (c === 'ORDER_ID_ALREADY_EXISTS') return 'Заказ уже создан. Обновите страницу и повторите попытку.'
+        if (c === 'LAVA_API_ERROR') return 'Сервис оплаты временно недоступен. Попробуйте позже.'
+        if (c === 'LAVA_NETWORK_ERROR') return 'Нет соединения с сервисом оплаты. Попробуйте позже.'
+        if (c === 'LAVA_INVALID_JSON') return 'Ошибка ответа сервиса оплаты. Попробуйте позже.'
+        if (c === 'LAVA_NO_PAYMENT_URL') return 'Не удалось получить ссылку на оплату. Попробуйте позже.'
+        return 'Произошла ошибка. Попробуйте ещё раз.'
+      }
+
+      async function init() {
+        setStatus('Загрузка...', 'info')
+        const r = await fetch('/api/checkout/new')
+        const data = await r.json()
+        orderId = data.orderId
+        orderIdEl.textContent = orderId
+        productNameEl.textContent = data.product.name
+        productPriceEl.textContent = `${data.product.price} ${data.product.currency}`
+        syncPhonePrefix()
+        setStatus('')
+      }
+
+      function openOfferModal() {
+        lastActiveEl = document.activeElement
+        offerModalOverlay.dataset.open = '1'
+        offerModalOverlay.setAttribute('aria-hidden', 'false')
+        document.body.style.overflow = 'hidden'
+        offerModalClose.focus()
+      }
+
+      function closeOfferModal() {
+        offerModalOverlay.dataset.open = '0'
+        offerModalOverlay.setAttribute('aria-hidden', 'true')
+        document.body.style.overflow = ''
+        if (lastActiveEl && typeof lastActiveEl.focus === 'function') lastActiveEl.focus()
+      }
+
+      offerLink.addEventListener('click', (e) => {
+        e.preventDefault()
+        openOfferModal()
+      })
+
+      offerModalClose.addEventListener('click', () => closeOfferModal())
+
+      offerModalOverlay.addEventListener('click', (e) => {
+        if (e.target === offerModalOverlay) closeOfferModal()
+      })
+
+      document.addEventListener('keydown', (e) => {
+        if (offerModalOverlay.dataset.open !== '1') return
+        if (e.key === 'Escape') closeOfferModal()
+      })
+
+      function normalizePrefix(prefix) {
+        const p = String(prefix || '').trim()
+        return p.startsWith('+') ? p : `+${p}`
+      }
+
+      function replaceLeadingCode(value, newPrefix) {
+        const v = String(value || '').trim()
+        const p = normalizePrefix(newPrefix)
+        if (!v) return p
+        if (!v.startsWith('+')) return `${p} ${v}`
+        const without = v.replace(/^\+\d{1,4}\s*/, '')
+        return `${p} ${without}`.trimEnd()
+      }
+
+      function syncPhonePrefix() {
+        const prefix = normalizePrefix(countryEl.value)
+        const current = phoneEl.value.trim()
+        if (!current) {
+          phoneEl.value = prefix + ' '
+          return
+        }
+        phoneEl.value = replaceLeadingCode(current, prefix)
+      }
+
+      countryEl.addEventListener('change', () => {
+        syncPhonePrefix()
+        phoneEl.focus()
+      })
+
+      phoneEl.addEventListener('focus', () => {
+        const prefix = normalizePrefix(countryEl.value)
+        if (!phoneEl.value.trim()) {
+          phoneEl.value = prefix + ' '
+        }
+      })
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        setStatus('')
+
+        const rawPhone = phoneEl.value || ''
+        const phoneDigits = digitsOnly(rawPhone)
+        const prefixDigits = digitsOnly(countryEl.value)
+
+        if (!phoneDigits || phoneDigits === prefixDigits) {
+          setStatus('Ошибка: заполните поле номера телефона')
+          return
+        }
+
+        const emailValue = document.getElementById('email').value || ''
+        if (!String(emailValue).trim()) {
+          setStatus('Ошибка: заполните поле e-mail')
+          return
+        }
+
+        payBtn.disabled = true
+
+        try {
+          const payload = {
+            orderId,
+            phone: phoneEl.value,
+            email: emailValue
+          }
+
+          const r = await fetch('/api/checkout/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+
+          const data = await r.json().catch(() => ({}))
+          if (!r.ok) {
+            const serverCode = data.detail || data.error || r.status
+            setStatus(`Ошибка: ${translateError(serverCode)}`)
+            payBtn.disabled = false
+            return
+          }
+
+          if (data.paymentUrl) {
+            window.location.href = data.paymentUrl
+            return
+          }
+
+          setStatus('Ошибка: не удалось перейти к оплате')
+          payBtn.disabled = false
+        } catch (err) {
+          setStatus('Ошибка: нет соединения. Проверьте интернет и попробуйте ещё раз.')
+          payBtn.disabled = false
+        }
+      })
+
+      init().catch(() => setStatus('Ошибка загрузки'))
+    </script>
+  </body>
+</html>

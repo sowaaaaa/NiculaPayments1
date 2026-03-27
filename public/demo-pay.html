@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Демо-оплата</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card" aria-label="Демо-оплата">
+        <div class="card__inner">
+          <h1 class="title">Оплата (демо-режим)</h1>
+          <p class="subtitle">Это демонстрационная страница. Реальный платёж через Lava будет подключён после регистрации.</p>
+
+          <div class="section">
+            <div class="kv" aria-label="Детали демо-платежа">
+              <div class="kv__k">Номер заказа</div>
+              <div class="kv__v" id="orderId">—</div>
+              <div class="kv__k">Сумма</div>
+              <div class="kv__v" id="amount">—</div>
+            </div>
+
+            <form id="demoForm" class="form">
+              <div class="field">
+                <label for="card">Номер карты</label>
+                <input id="card" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" required />
+              </div>
+              <div class="field">
+                <label for="exp">Срок действия</label>
+                <input id="exp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" required />
+              </div>
+              <div class="field">
+                <label for="cvc">CVC</label>
+                <input id="cvc" inputmode="numeric" autocomplete="cc-csc" placeholder="000" required />
+              </div>
+              <div class="actions">
+                <button class="btn" type="submit" id="confirmBtn">Подтвердить оплату (демо)</button>
+              </div>
+              <div id="status" class="status" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div><a class="link" href="/">Вернуться к оплате</a></div>
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      const statusEl = document.getElementById('status')
+      const orderIdEl = document.getElementById('orderId')
+      const amountEl = document.getElementById('amount')
+      const confirmBtn = document.getElementById('confirmBtn')
+      const form = document.getElementById('demoForm')
+
+      function setStatus(text, kind) {
+        statusEl.textContent = text || ''
+        if (!text) {
+          statusEl.style.color = ''
+          return
+        }
+        if (kind === 'info') {
+          statusEl.style.color = 'var(--muted)'
+          return
+        }
+        statusEl.style.color = 'var(--danger)'
+      }
+
+      const params = new URLSearchParams(location.search)
+      const orderId = params.get('orderId') || ''
+      orderIdEl.textContent = orderId || '—'
+
+      fetch(`/api/order/${encodeURIComponent(orderId)}`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data && data.price != null) {
+            amountEl.textContent = `${data.price} ${data.currency || ''}`.trim()
+          }
+        })
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        setStatus('')
+        confirmBtn.disabled = true
+        setStatus('Проверяем платёж...', 'info')
+
+        try {
+          const r = await fetch('/api/demo/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ orderId })
+          })
+          const data = await r.json().catch(() => ({}))
+          if (!r.ok) {
+            setStatus(`Ошибка: ${data.detail || r.status}`)
+            confirmBtn.disabled = false
+            return
+          }
+
+          if (data.emailed) {
+            setStatus('Оплата подтверждена. Письмо со ссылкой отправлено.', 'info')
+          } else {
+            setStatus('Оплата подтверждена. Письмо не отправлено (SMTP не настроен).', 'info')
+          }
+          setTimeout(() => {
+            location.href = '/'
+          }, 1200)
+        } catch {
+          setStatus('Ошибка сети')
+          confirmBtn.disabled = false
+        }
+      })
+    </script>
+  </body>
+</html>
